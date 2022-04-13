@@ -3,7 +3,7 @@
 void    getUserInput(vector<edge>& edges)
 {
     fstream     input_file;
-    string      input_file_path = "data/input.txt";
+    string      input_file_path = "../data/input.txt";
     input_file.open(input_file_path);
     if (!input_file.is_open())
     {

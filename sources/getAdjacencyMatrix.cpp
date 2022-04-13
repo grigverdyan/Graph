@@ -55,7 +55,7 @@ size_t  adjacencyMatrixSize(vector<edge>& edges)
     return size + 1;
 }
 
-void    buildAdjacencyMatrix(size_t **mx, vector<edge> edges)
+void    buildAndSimplifyAdjacencyMx(size_t **mx, vector<edge> edges, size_t size)
 {
     for (size_t i = 0; i < edges.size(); i++)
     {
@@ -63,10 +63,7 @@ void    buildAdjacencyMatrix(size_t **mx, vector<edge> edges)
             mx[edges[i].left][edges[i].right] += 1;
         mx[edges[i].right][edges[i].left] += 1;
     }
-}
 
-void    simpleAdjacencyMatrix(size_t **mx, size_t size)
-{
     for (size_t i = 1; i < size; i++)
         for (size_t j = 1; j < size; j++)
             if (i == j)
