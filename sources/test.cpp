@@ -1,76 +1,100 @@
 #include <iostream>
 #include <vector>
+// CPP Program to count cycles of length n
+// in a given graph.
 using namespace std;
-const int N = 100000;
 
+// Number of vertices
+const int V = 7;
 
-vector<int> graph[N];
-vector<int> cycles[N];
-
-
-void dfs_cycle(int u, int p, int color[], int mark[], int par[], int& cyclenumber)
+void DFS(bool graph[][V], bool marked[], int n, int vert, int start, int &count)
 {
-	if (color[u] == 2)
-		return;
-	if (color[u] == 1)
-    {
-		cyclenumber++;
-		int cur = p;
-		mark[cur] = cyclenumber;
-		while (cur != u)
-        {
-			cur = par[cur];
-			mark[cur] = cyclenumber;
-		}
-		return;
+	// mark the vertex vert as visited
+	marked[vert] = true;
+
+	// if the path of length (n-1) is found
+	if (n == 0) {
+
+		// mark vert as un-visited to make
+		// it usable again.
+		marked[vert] = false;
+
+		// Check if vertex vert can end with
+		// vertex start
+		if (graph[vert][start])
+		{
+			count++;
+			return;
+		} else
+			return;
 	}
-	par[u] = p;
-	color[u] = 1;
-	for (int v : graph[u])
-    {
-		if (v == par[u])
-			continue;
-		dfs_cycle(v, u, color, mark, par, cyclenumber);
-	}
-	color[u] = 2;
+
+	// For searching every possible path of
+	// length (n-1)
+	for (int i = 0; i < V; i++)
+		if (!marked[i] && graph[vert][i])
+
+			// DFS for searching path by decreasing
+			// length by 1
+			DFS(graph, marked, n-1, i, start, count);
+
+	// marking vert as unvisited to make it
+	// usable again.
+	marked[vert] = false;
 }
 
-void addEdge(int u, int v)
+// Counts cycles of length N in an undirected
+// and connected graph.
+int countCycles(bool graph[][V], int n)
 {
-	graph[u].push_back(v);
-	graph[v].push_back(u);
-}
+	// all vertex are marked un-visited initially.
+	bool marked[V];
+	memset(marked, 0, sizeof(marked));
 
-void printCycles(int edges, int mark[], int& cyclenumber)
-{
-	for (int i = 1; i <= edges; i++)
-		if (mark[i] != 0)
-			cycles[mark[i]].push_back(i);
+	// Searching for cycle by using v-n+1 vertices
+	int count = 0;
+	for (int i = 0; i < V - (n - 1); i++) {
+		DFS(graph, marked, n-1, i, i, count);
 
-	for (int i = 1; i <= cyclenumber; i++)
-    {
-		cout << "Cycle Number " << i << ": ";
-		for (int x : cycles[i])
-			cout << x << " ";
-		cout << endl;
+		// ith vertex is marked as visited and
+		// will not be visited again.
+		marked[i] = true;
 	}
+
+	return count/2;
 }
+
 int main()
 {
-
-	addEdge(1, 2);
-	addEdge(2, 3);
-	addEdge(3, 5);
-	addEdge(4, 5);
-	addEdge(5, 6);
-	addEdge(4, 6);
-	addEdge(2, 4);
-	int color[N];
-	int par[N];
-	int mark[N];
-	int cyclenumber = 0;
-	int edges = 7;
-
-	dfs_cycle(1, 0, color, mark, par, cyclenumber);
-	printCycles(edges, mark, cyclenumber);
+	bool graph[][V] = { {0, 1, 0, 0, 0, 0, 1},
+					    {1, 0, 1, 1, 1, 0, 0},
+					    {0, 1, 0, 1, 0, 0, 0},
+					    {0, 1, 1, 0, 1, 1, 0},
+					    {0, 1, 0, 1, 0, 1, 0},
+                        {0, 0, 0, 0, 1, 0, 1},
+                        {1, 0, 0, 1, 1, 1, 0} };
+	int n = 4;
+	cout << "Total cycles of length " << n << " are "
+		<< countCycles(graph, n);
+	return 0;
 }
+
+// int main()
+// {
+
+// 	addEdge(1, 2);
+// 	addEdge(2, 3);
+// 	addEdge(3, 5);
+// 	addEdge(4, 5);
+// 	addEdge(5, 6);
+// 	addEdge(4, 6);
+// 	addEdge(2, 4);
+// 	int color[N];
+// 	int par[N];
+// 	int mark[N];
+// 	int cyclenumber = 0;
+// 	int edges = 7;
+
+// 	dfs_cycle(1, 0, color, mark, par, cyclenumber);
+// 	printCycles(edges, mark, cyclenumber);
+// }
