@@ -8,8 +8,7 @@ int main()
 
     size_t  size = adjacencyMatrixSize(edges);
     size_t**  adjacency_matrix = newDynamic(size);
-    buildAdjacencyMatrix(adjacency_matrix, edges);
-    simpleAdjacencyMatrix(adjacency_matrix, size);
+    buildAndSimplifyAdjacencyMx(adjacency_matrix, edges, size);
     
     displayMatrix(adjacency_matrix, size);
 }
