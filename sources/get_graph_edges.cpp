@@ -1,14 +1,14 @@
-#include "../includes/getGraphEdges.hpp"
+#include "../includes/get_graph_edges.hpp"
 
-void    getUserInput(vector<edge>& edges)
+void    getUserInput(vector<edge>& edges, string file)
 {
-    fstream     input_file;
-    string      input_file_path = "../data/input.txt";
+    fstream input_file;
+    string  input_file_path ="../data/" + file;
     input_file.open(input_file_path);
     if (!input_file.is_open())
     {
-        cerr << "ERROR: can not open \"input.txt\" file\n";
-        exit(1);
+        cerr << "ERROR: can not open \"file\" file\n";
+        exit(3);
     }
 
     size_t  idx;
@@ -20,8 +20,9 @@ void    getUserInput(vector<edge>& edges)
     while (getline(input_file, str))
     {
         idx = 0;
-        if (!lineHasVertices(str))
+        if (!lineHasVertices(str)) {
             continue;
+        }
         left = getVertice(str, idx);
         right = getVertice(str, idx);
 
@@ -37,7 +38,7 @@ void    getUserInput(vector<edge>& edges)
     if (!edges.size())
     {
         cerr << "ERROR: Incorrect input file!\n";
-        exit(2);
+        exit(4);
     }
     input_file.close();
 }
@@ -55,15 +56,15 @@ bool    lineHasVertices(string& str)
 size_t  getVertice(string& str, size_t& idx)
 {
     size_t  vertex = 0;
-    
+
     // escape non digit characters
     while (str[idx] && !isdigit(str[idx]))
         idx++;
-    
+
     size_t      i = 0;
     const short vertice_max_digit = 3; // maximum digits in a vertice
 
-    // getting a vertice from a string 
+    // getting a vertice from a string
     while (str[idx] && isdigit(str[idx]) && i < vertice_max_digit)
     {
         vertex = vertex * 10 + (str[idx++] - '0');

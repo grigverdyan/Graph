@@ -1,5 +1,5 @@
-#ifndef HEADER_H
-# define HEADER_H
+#ifndef HEADER_HPP
+# define HEADER_HPP
 
 // library includes
 #include <iostream>
@@ -26,4 +26,4 @@ struct edge
     }
 };
 
-#endif /* HEADER_H */
+#endif // HEADER_HPP
