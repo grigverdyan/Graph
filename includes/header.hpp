@@ -1,20 +1,12 @@
 #ifndef HEADER_HPP
-# define HEADER_HPP
+#define HEADER_HPP
 
 // library includes
 #include <iostream>
 #include <vector>
 #include <string>
 #include <fstream>
-
-// usings
-using std::cin;
-using std::cout;
-using std::endl;
-using std::vector;
-using std::string;
-using std::fstream;
-using std::cerr;
+#include <cstring>
 
 struct edge
 {
@@ -25,5 +17,7 @@ struct edge
         this->right = 0;
     }
 };
+
+using vEdge = std::vector<edge>;
 
 #endif // HEADER_HPP

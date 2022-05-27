@@ -1,35 +1,45 @@
 #include "../includes/get_graph_edges.hpp"
 #include "../includes/utils.hpp"
 #include "../includes/get_adjacency_matrix.hpp"
-#include "../includes/algorithm.hpp"
+//#include "../includes/algorithm.hpp"
+#include "../includes/error_message.hpp"
 
 int main(int argc, char *argv[])
 {
-    size_t  len;
-    if (argc < 2) {
-        cerr << "ERROR: No path file from which to read the Graph and no specified length of graph\n";
+//    size_t  len;
+    try {
+        if (argc < 2) {
+            throw ErrorMessage ("\n\t[File ERROR]: No path file from which to read the Graph!");
+        } else if (argc < 3) {
+            throw ErrorMessage ("\n\t[Input ERROR]: No length of simple cycles was specified!");
+        }
+    } catch (ErrorMessage& error) {
+        error.showErrorMessage();
         exit(1);
-    } else if (argc < 3) {
-        cerr << "ERROR: please specify which length of simple cycles you want to find!\n"
-             << "By default length is chosen as 3\n";
-        len = 3;
     }
 
-    string  file = argv[2];
-    if (!isValidFilename(file))
-    {
-        cerr << "ERROR: Not Valid file extension. MUST BE .txt\n";
+    std::string  inputFile = argv[2];
+    try {
+        if (!isValidFilename(inputFile)){
+            throw ErrorMessage("\n\t[Extension ERROR]: Not valid file extension. MUST BE [.txt]");
+        }
+    } catch (ErrorMessage& error) {
+        error.showErrorMessage();
         exit(2);
     }
-    vector<edge> edges;
-    getUserInput(edges, file);
-
-    size_t  size = adjacencyMatrixSize(edges);
-    size_t**  adjacency_matrix = newDynamic(size);
-    buildAndSimplifyAdjacencyMx(adjacency_matrix, edges, size);
-    displayMatrix(adjacency_matrix, size);
-
-    len = *argv[1] - '0';
-    findSimpleCycles(adjacency_matrix, len, size);
+    
+    vEdge edges;
+    try {
+        getUserInput(edges, inputFile);
+        size_t  size = getMatrixSize(edges);
+        size_t**  adjacencyMatrix = newDynamic(size);
+        buildMatrix(adjacencyMatrix, edges, size);
+        displayMatrix(adjacencyMatrix, size);
+    } catch (ErrorMessage& error) {
+        error.showErrorMessage();
+        exit(3);
+    }
+//    len = *argv[1] - '0';
+//    findSimpleCycles(adjacencyMatrix, len, size);
 
 }

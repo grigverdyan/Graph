@@ -3,6 +3,6 @@
 
 #include "header.hpp"
 
-bool	isValidFilename(string file);
+bool	isValidFilename(std::string file);
 
 #endif // UTILS_HPP

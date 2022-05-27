@@ -9,7 +9,7 @@ size_t  countSimpleCycles(size_t **mx, size_t cycleLen, size_t size)
 	vector<size_t>	cycleVertices;
 	// Searching for cycle by using v-n+1 vertices
 	size_t  count = 0;
-	size_t  temp = 0;
+//	size_t  temp = 0;
 	for (size_t i = 1; i < size - (cycleLen - 1); i++) {
 	// 	temp = count;
 		dfs(mx, marked, cycleLen - 1, i, i, count, size, cycleVertices);
@@ -17,13 +17,13 @@ size_t  countSimpleCycles(size_t **mx, size_t cycleLen, size_t size)
 		cycleVertices.clear();
 		// else
 		// {
-		// 	cout << "size == " << cycleVertices.size() << endl;
+		// 	std::cout << "size == " << cycleVertices.size() << std::endl;
 		// 	if (cycleVertices.size() >= cycleLen) {
-		// 		cout << "size == " << cycleVertices.size() << endl;
+		// 		std::cout << "size == " << cycleVertices.size() << std::endl;
 		// 		for (auto vert: cycleVertices) {
-		// 			cout << vert << " ";
+		// 			std::cout << vert << " ";
 		// 		}
-		// 		cout << endl;
+		// 		std::cout << std::endl;
 		// 		cycleVertices.clear();
 		// 	}
 		// }
@@ -51,11 +51,11 @@ void    dfs(size_t **mx, bool *marked, size_t cycleLen, size_t vert, size_t star
 		if (mx[vert][start]) {
 			count++;
 			if (cycleVertices.size() >= 3) {
-				cout << "size == " << cycleLen<< endl;
+				std::cout << "size == " << cycleLen<< std::endl;
 				for (auto& vert: cycleVertices) {
-					cout << vert << " ";
+					std::cout << vert << " ";
 				}
-				cout << endl;
+				std::cout << std::endl;
 			}
 			cycleVertices.clear();
 		}
@@ -76,7 +76,7 @@ void    dfs(size_t **mx, bool *marked, size_t cycleLen, size_t vert, size_t star
 
 void    findSimpleCycles(size_t **mx, size_t cycleLen, size_t size)
 {
-//     cout << "Total simple cycles of length " << cycleLen << " are "
+//     std::cout << "Total simple cycles of length " << cycleLen << " are "
 //          <<
 	countSimpleCycles(mx, cycleLen, size);
 }

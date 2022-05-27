@@ -1,50 +1,46 @@
 #include "../includes/get_adjacency_matrix.hpp"
+#include "../includes/error_message.hpp"
 
 size_t   **newDynamic(size_t size)
 {
-    size_t**    mx = new size_t* [size];
-    if (!mx)
-    {
-        cerr << "ERROR: could not allocate mamory for adjacency matrix!\n";
-        exit(5);
+    size_t**    mxAdjacency = new size_t* [size];
+    if (!mxAdjacency) {
+        throw ErrorMessage("\n\t[Memory ERROR]: Couldn't allocate mamory for adjacency matrix!");
     }
 
-    for (size_t i = 0; i < size; i++)
-    {
-        mx[i] = new size_t [size];
-        if (!mx[i])
-        {
-            deleteDynamic(mx, i);
-            cerr << "ERROR: could not allocate memory for adjacency matrix[" << i << "]!\n";
-            exit(6);
+    for (size_t i = 0; i < size; i++) {
+        mxAdjacency[i] = new size_t [size];
+        if (!mxAdjacency[i]) {
+            deleteDynamic(mxAdjacency, i);
+            throw ErrorMessage ("\n\t[Memory ERROR: Couldn't allocate memory for adjacency matrix in row!", i);
         }
     }
-    adjacencyMxFillZero(mx, size);
-    return mx;
+    fillMatrixZero(mxAdjacency, size);
+    return mxAdjacency;
 }
 
-void    deleteDynamic(size_t **mx, size_t size)
+void    deleteDynamic(size_t **mxAdjacency, size_t size)
 {
     for (size_t i = 0; i < size; i++) {
-        delete [] mx[i];
+        delete [] mxAdjacency[i];
     }
 
-    delete [] mx;
-    mx = nullptr;
+    delete [] mxAdjacency;
+    mxAdjacency = nullptr;
 }
 
-void    adjacencyMxFillZero(size_t **mx, size_t size)
+void    fillMatrixZero(size_t **mxAdjacency, size_t size)
 {
     for (size_t i = 0; i < size; i++) {
         for (size_t j = 0; j < size; j++) {
-            mx[i][j] = 0;
+            mxAdjacency[i][j] = 0;
         }
     }
 }
 
-size_t  adjacencyMatrixSize(vector<edge>& edges)
+size_t  getMatrixSize(vEdge& edges)
 {
-    size_t  size = edges[0].left;
+    size_t    size = edges[0].left;
     for (size_t i= 0; i < edges.size(); i++) {
         if (edges[i].left > size) {
             size = edges[i].left;
@@ -57,33 +53,39 @@ size_t  adjacencyMatrixSize(vector<edge>& edges)
     return size + 1;
 }
 
-void    buildAndSimplifyAdjacencyMx(size_t **mx, vector<edge> edges, size_t size)
+void    buildMatrix(size_t **mxAdjacency, vEdge edges, size_t size)
 {
     for (size_t i = 0; i < edges.size(); i++) {
         if (edges[i].left != edges[i].right) {
-            mx[edges[i].left][edges[i].right] += 1;
+            mxAdjacency[edges[i].left][edges[i].right] += 1;
         }
-        mx[edges[i].right][edges[i].left] += 1;
+        mxAdjacency[edges[i].right][edges[i].left] += 1;
     }
 
-    for (size_t i = 1; i < size; i++) {
-        for (size_t j = 1; j < size; j++) {
+    // simplifies the graph, whether it is simple or not
+    simplifyMatrix(mxAdjacency, size);
+}
+
+void    simplifyMatrix(size_t** mxAdjacency, size_t size)
+{
+    for (size_t i = 1; i < size; ++i) {
+        for (size_t j = 1; j < size; ++j) {
             if (i == j) {
-                mx[i][j] = 0;
-            } else if (mx[i][j] > 1) {
-                mx[i][j] = 1;
+                mxAdjacency[i][j] = 0;
+            } else if (mxAdjacency[i][j] > 1) {
+                mxAdjacency[i][j] = 1;
             }
         }
     }
+
 }
 
-void    displayMatrix(size_t **mx, size_t size)
+void    displayMatrix(size_t **mxAdjacency, size_t size)
 {
-    for (size_t i = 0; i < size; i++)
-    {
+    for (size_t i = 0; i < size; i++) {
         for (size_t j = 0; j < size; j++) {
-            cout << mx[i][j] << " ";
+            std::cout << mxAdjacency[i][j] << " ";
         }
-        cout << endl;
+        std::cout << std::endl;
     }
 }
