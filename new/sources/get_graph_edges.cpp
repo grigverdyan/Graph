@@ -16,8 +16,7 @@ void    getUserInput(vEdge& edges, std::string file)
     size_t      right;
     std::string str;
 
-    // line-by-line getting edges of graph
-    while (getline(inFile, str)) {
+    while (getline(inFile, str)) {      // line-by-line getting edges of graph
         idx = 0;
         if (!lineHasVertices(str)) {
             continue;
@@ -34,7 +33,7 @@ void    getUserInput(vEdge& edges, std::string file)
     }
 
     if (!edges.size()) {
-        throw ("\n\t[Input ERROR]: Incorrect input file. Edges not found!");
+        throw ErrorMessage("\n\t[Input ERROR]: Incorrect input file. Edges not found!");
     }
     inFile.close();
 }
@@ -52,23 +51,19 @@ bool    lineHasVertices(std::string& str)
 size_t  getVertice(std::string& str, size_t& idx)
 {
     size_t  vertex = 0;
-
-    // skip non-digit characters
-    while (str[idx] && !isdigit(str[idx])) {
+    while (str[idx] && !isdigit(str[idx])) {     // skip non-digit characters
         idx++;
     }
 
     size_t      i = 0;
     const short MaxVerticeDigit = 3; // maximum digits in a vertice
 
-    // get a vertice from a string
-    while (str[idx] && isdigit(str[idx]) && i < MaxVerticeDigit) {
+    while (str[idx] && isdigit(str[idx]) && i < MaxVerticeDigit) {  // get a vertice from a string
         vertex = vertex * 10 + (str[idx++] - '0');
         i++;
     }
 
-    // skip spaces
-    while (str[idx] && str[idx] != ' ') {
+    while (str[idx] && str[idx] != ' ') {   // skip spaces
         idx++;
     }
 

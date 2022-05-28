@@ -38,8 +38,9 @@ template<typename T>
 typename Graph<T>::Matrix   Graph<T>::newDynamic(size_t size)
 {
     typename Graph<T>::Matrix matrix(size);
-    for (size_t i = 0; i < mAdjacencySize; i++)
+    for (size_t i = 0; i < mAdjacencySize; i++) {
         matrix[i].resize(mAdjacencySize);
+    }
     return matrix;
 }
 

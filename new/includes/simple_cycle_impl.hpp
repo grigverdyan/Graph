@@ -5,25 +5,22 @@ SimpleCycle<T>::SimpleCycle(size_t	len, Graph<T> graph)
 {
 	mSimpleCyclesLength = len;
 	mMarked.resize(graph.mAdjacencySize);
-	for (size_t i = 0; i < mMarked.size(); ++i)
+
+	for (size_t i = 0; i < mMarked.size(); ++i) {	// all vertex are marked unvisited initially.
 		mMarked[i] = 0;
-
-	// memset(mMarked, 0, graph.mAdjacencySize);	// all vertex are marked unvisited initially.
-}
-
-template<typename T>
-SimpleCycle<T>::~SimpleCycle()
-{
-	// delete [] mMarked;
-	// mMarked = nullptr;
+	}
 }
 
 template<typename T>
 void    SimpleCycle<T>::findSimpleCycles(Graph<T> graph)
 {
-
-    std::cout << "Total simple cycles of length " << mSimpleCyclesLength
-			  << " are " << countSimpleCycles(graph);
+	size_t	cycleCount = countSimpleCycles(graph);
+	if (cycleCount == 0) {
+		std::cout << "\nThere is NO simple cycle of length " << mSimpleCyclesLength << " in your graph!\n\n";
+	} else {
+    std::cout << "\nTotal simple cycles of length " << mSimpleCyclesLength
+			  << " are " << cycleCount << "\n\n";
+	}
 }
 
 template<typename T>
@@ -47,8 +44,7 @@ size_t	SimpleCycle<T>::countSimpleCycles(Graph<T> graph)
 		// 	}
 		// }
 
-		// ith vertex is marked as visited and will not be visited again.
-		mMarked[i] = true;
+		mMarked[i] = true;		// i-th vertex is marked as visited and will not be visited again
 	}
 	return count / 2;
 }
