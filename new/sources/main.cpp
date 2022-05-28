@@ -1,34 +1,26 @@
-#include "get_graph_edges.hpp"
 #include "utils.hpp"
+#include "get_graph_edges.hpp"
 #include "graph.hpp"
 #include "error_message.hpp"
 #include "simple_cycle.hpp"
 
-int main(int argc, char *argv[]) try
+int main(int argc, char *argv[])
 {
-    if (argc < 2) {
-        throw ErrorMessage ("\n\t[File ERROR]: No path file from which to read the Graph!");
-    } else if (argc < 3) {
-        throw ErrorMessage ("\n\t[Input ERROR]: No length of simple cycles was specified!");
-    }
+    // alias
+    using VertexType = size_t;
 
-    std::string  inputFile = argv[2];
-    if (!isValidFilename(inputFile)){
-        throw ErrorMessage("\n\t[Extension ERROR]: Not valid file extension. MUST BE [.txt]");
+    try {
+        size_t  len = parseFile(argc, argv);
+    }   catch (ErrorMessage& error) {
+        error.showErrorMessage();
     }
 
     vEdge edges;
+    std::string  inputFile = argv[2];
     getUserInput(edges, inputFile);
-    Graph<size_t>   graph(edges);
+    Graph<VertexType>   graph(edges);
     // graph.displayAdjacency();
-
-    size_t  len = atoi(argv[1]);
-    if (!len) {
-        throw ErrorMessage("\n\t[Input ERROR]: Not valid length of simple cycles specified!");
-    }
-    SimpleCycle<size_t> cycle(len, graph);
+    SimpleCycle<VertexType> cycle(len, graph);
     cycle.findSimpleCycles(graph);
 
-} catch (ErrorMessage& error) {
-    error.showErrorMessage();
 }
