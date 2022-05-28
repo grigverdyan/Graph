@@ -1,5 +1,5 @@
-#include "../includes/get_adjacency_matrix.hpp"
-#include "../includes/error_message.hpp"
+#include "get_adjacency_matrix.hpp"
+#include "error_message.hpp"
 
 size_t   **newDynamic(size_t size)
 {

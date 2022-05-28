@@ -18,7 +18,7 @@ $(EXECUTABLE) : $(OBJECTS)
 	$(CC) $(OBJECTS) -o $@
 
 %.o : %.cpp
-	$(CC) $(STANDARD) $(FLAGS) -c $< -o $@
+	$(CC) $(STANDARD) $(FLAGS) -c -g $< -o $@
 
 re : fclean all
 

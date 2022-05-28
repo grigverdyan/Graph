@@ -18,6 +18,5 @@ struct edge {
 };
 
 using vEdge   = std::vector<edge>;
-using vSize_t = std::vector<size_t>;
 
 #endif // HEADER_HPP

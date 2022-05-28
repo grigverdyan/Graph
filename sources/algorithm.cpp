@@ -1,25 +1,25 @@
-#include "../includes/algorithm.hpp"
+#include "algorithm.hpp"
 
-size_t  countSimpleCycles(size_t **mx, size_t cycleLen, size_t size)
+size_t  countSimpleCycles(size_t **adjMatrix, size_t cycleLen, size_t sizeMatrix)
 {
     // all vertex are marked un-visited initially.
-	bool    marked[size];
+	bool    marked[sizeMatrix];
 	memset(marked, 0, sizeof(marked));
 
-	vector<size_t>	cycleVertices;
+	vSize_t	cycleVertices;
 	// Searching for cycle by using v-n+1 vertices
 	size_t  count = 0;
 //	size_t  temp = 0;
-	for (size_t i = 1; i < size - (cycleLen - 1); i++) {
+	for (size_t i = 1; i < sizeMatrix - cycleLen + 1; ++i) {
 	// 	temp = count;
-		dfs(mx, marked, cycleLen - 1, i, i, count, size, cycleVertices);
+		dfs(adjMatrix, marked, cycleLen - 1, i, i, count, sizeMatrix, cycleVertices);
 
-		cycleVertices.clear();
+		// cycleVertices.clear();
 		// else
 		// {
-		// 	std::cout << "size == " << cycleVertices.size() << std::endl;
+		// 	std::cout << "sizeMatrix == " << cycleVertices.size() << std::endl;
 		// 	if (cycleVertices.size() >= cycleLen) {
-		// 		std::cout << "size == " << cycleVertices.size() << std::endl;
+		// 		std::cout << "sizeMatrix == " << cycleVertices.size() << std::endl;
 		// 		for (auto vert: cycleVertices) {
 		// 			std::cout << vert << " ";
 		// 		}
@@ -34,7 +34,7 @@ size_t  countSimpleCycles(size_t **mx, size_t cycleLen, size_t size)
 	return count / 2;
 }
 
-void    dfs(size_t **mx, bool *marked, size_t cycleLen, size_t vert, size_t start, size_t& count, size_t size, vector<size_t>& cycleVertices)
+void    dfs(size_t **adjMatrix, bool *marked, size_t cycleLen, size_t vert, size_t start, size_t& count, size_t sizeMatrix, vector<size_t>& cycleVertices)
 {
 	// mark the vertex vert as visited
 	marked[vert] = true;
@@ -48,7 +48,7 @@ void    dfs(size_t **mx, bool *marked, size_t cycleLen, size_t vert, size_t star
 
 
 		// Check if vertex vert can end with vertex start
-		if (mx[vert][start]) {
+		if (adjMatrix[vert][start]) {
 			count++;
 			if (cycleVertices.size() >= 3) {
 				std::cout << "size == " << cycleLen<< std::endl;
@@ -63,20 +63,20 @@ void    dfs(size_t **mx, bool *marked, size_t cycleLen, size_t vert, size_t star
 	}
 
 	// For searching every possible path of length (n-1)
-	for (size_t i = 1; i < size; i++) {
-		if (!marked[i] && mx[vert][i]) {
+	for (size_t i = 1; i < sizeMatrix; i++) {
+		if (!marked[i] && adjMatrix[vert][i]) {
 
 			// DFS for searching path by decreasing length by 1
-			dfs(mx, marked, cycleLen - 1, i, start, count, size, cycleVertices);
+			dfs(adjMatrix, marked, cycleLen - 1, i, start, count, sizeMatrix, cycleVertices);
 		}
 	}
 	// marking vert as unvisited to make it usable again.
 	marked[vert] = false;
 }
 
-void    findSimpleCycles(size_t **mx, size_t cycleLen, size_t size)
+void    findSimpleCycles(size_t **adjMatrix, size_t cycleLen, size_t sizeMatrix)
 {
 //     std::cout << "Total simple cycles of length " << cycleLen << " are "
 //          <<
-	countSimpleCycles(mx, cycleLen, size);
+	countSimpleCycles(adjMatrix, cycleLen, sizeMatrix);
 }
