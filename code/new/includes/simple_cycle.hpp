@@ -5,7 +5,8 @@
 #include "graph.hpp"
 
 //	aliases
-using vSize_t = std::vector<size_t>;
+template<typename T>
+using vType   = std::vector<T>;
 using vBool	  = std::vector<bool>;
 
 template<typename T>
@@ -15,10 +16,15 @@ public:
 	void    findSimpleCycles(Graph<T>);
 	size_t  countSimpleCycles(Graph<T>);
 	void    dfs(Graph<T>, size_t, size_t, size_t, size_t&);
+    // for displaying some cycle
+    bool    detectCycle(size_t, size_t, Graph<T>);
+    void    findSomeSimpleCycle(Graph<T>);
 private:
 	size_t	mSimpleCyclesLength;
 	vBool	mMarked;
-	vSize_t	mCycleVertices;
+    std::vector<T>	mCycleVertices;
+    std::vector<T>   mSimpleCycle;
+
 };
 
 #include "simple_cycle_impl.hpp"

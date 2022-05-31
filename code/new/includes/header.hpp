@@ -7,6 +7,7 @@
 #include <string>
 #include <fstream>
 #include <cstring>
+#include <queue>
 
 struct edge {
     size_t  left;
@@ -17,6 +18,8 @@ struct edge {
     }
 };
 
-using vEdge   = std::vector<edge>;
+using vEdge             = std::vector<edge>;
+using VertexType        = size_t;
+using QueueVertexType   = std::queue<VertexType>;
 
 #endif // HEADER_HPP
