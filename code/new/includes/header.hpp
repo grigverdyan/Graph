@@ -21,5 +21,8 @@ struct edge {
 using vEdge             = std::vector<edge>;
 using VertexType        = size_t;
 using QueueVertexType   = std::queue<VertexType>;
+using vBool             = std::vector<bool>;
+template<typename T>
+using vType             = std::vector<T>;
 
 #endif // HEADER_HPP

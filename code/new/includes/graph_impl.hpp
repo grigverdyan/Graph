@@ -1,6 +1,8 @@
 #include "graph.hpp"
 #include "error_message.hpp"
 
+using namespace GraphNamespace;
+
 template<typename T>
 Graph<T>::Graph(vEdge edges)
 {
@@ -81,12 +83,12 @@ void    Graph<T>::simplifyMatrix()
 }
 
 template<typename T>
-void    Graph<T>::displayAdjacency()
+void    Graph<T>::displayAdjacency(std::fstream& output)
 {
-    for (size_t i = 0; i < mAdjacencyMatrix.size(); ++i) {
-        for (size_t j = 0; j < mAdjacencyMatrix[i].size(); ++j) {
-            std::cout << mAdjacencyMatrix[i][j] << " ";
+    for (size_t i = 1; i < mAdjacencyMatrix.size(); ++i) {
+        for (size_t j = 1; j < mAdjacencyMatrix[i].size(); ++j) {
+            output << mAdjacencyMatrix[i][j] << " ";
         }
-        std::cout << std::endl;
+        output << std::endl;
     }
 }

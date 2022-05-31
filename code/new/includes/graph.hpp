@@ -1,25 +1,32 @@
-#ifndef	GRAPH_HPP
-#define GRAPH_HPP
+#ifndef	GRAPH_H
+#define GRAPH_H
 
 #include "header.hpp"
 
-template<typename T>
-class Graph {
-public:
-	Graph(vEdge);
-	Graph(const Graph&);
-	typedef 	std::vector<std::vector<T> > Matrix;
-	Matrix		mAdjacencyMatrix;
-	size_t		mAdjacencySize;
+namespace GraphNamespace {
 
-	void		displayAdjacency();
-private:
-	void		buildMatrix(vEdge);
-	void		fillMatrixZero(Matrix, size_t);
-	void		simplifyMatrix();
-	Matrix		newDynamic(size_t);
-	size_t		getMatrixSize(vEdge&);
-};
+    template<typename T>
+    class Graph {
+    public:
+	    typedef std::vector<std::vector<T>> Matrix;
+
+        Graph(vEdge);
+    	Graph(const Graph&);
+    	Matrix		mAdjacencyMatrix;
+    	size_t		mAdjacencySize;
+
+    	void		displayAdjacency(std::fstream& output);
+    private:
+    	void		buildMatrix(vEdge);
+    	void		fillMatrixZero(Matrix, size_t);
+    	void		simplifyMatrix();
+    	Matrix		newDynamic(size_t);
+    	size_t		getMatrixSize(vEdge&);
+
+    };  // class Graph
+
+}   // namespace GraphNamespace
 
 #include "graph_impl.hpp"
-#endif
+
+#endif  // GRAPH_H

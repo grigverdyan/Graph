@@ -4,6 +4,8 @@
 #include "error_message.hpp"
 #include "simple_cycle.hpp"
 
+using namespace GraphNamespace;
+
 int main(int argc, char *argv[]) try
 {
 	if (argc < 2) {
@@ -24,11 +26,18 @@ int main(int argc, char *argv[]) try
     vEdge edges;
     getUserInput(edges, file);
     Graph<VertexType>   graph(edges);
-    // graph.displayAdjacency();
+    std::fstream out;
+    out.open("data/out.txt", std::ios::out);
+    if (!out.is_open()) {
+        throw ErrorMessage ("\n\t[File ERROR]: Couldn't open file to write the Adjacency Matrix!");
+    }
+//    const std::ostream& output = std::cout;
+    graph.displayAdjacency(out);
     
     SimpleCycle<VertexType> cycle(len, graph);
     cycle.findSimpleCycles(graph);
-
+    
+    system("python3 sources/visualization.py");
     return 0;
 
 } catch (ErrorMessage& error) {
