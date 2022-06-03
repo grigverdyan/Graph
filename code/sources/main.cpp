@@ -31,12 +31,12 @@ int main(int argc, char *argv[]) try
     if (!out.is_open()) {
         throw ErrorMessage ("\n\t[File ERROR]: Couldn't open file to write the Adjacency Matrix!");
     }
-//    const std::ostream& output = std::cout;
     graph.displayAdjacency(out);
     
     SimpleCycle<VertexType> cycle(len, graph);
     cycle.findSimpleCycles(graph);
-    
+   
+    // Visualize input graph and adjacency matrix 
     system("python3 sources/visualization.py");
     return 0;
 
